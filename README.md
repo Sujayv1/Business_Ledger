@@ -1,31 +1,176 @@
-# Local Business Ledger
+# 📒 Cal-Org – Offline Business Ledger App (Flutter)
 
-A Flutter application for tracking business transactions offline with a Glassmorphism UI.
+Cal-Org is a **modern, offline-first business transaction management app** built using **Flutter**.
+It helps small businesses and individuals **track products, payments, balances, and financial statistics** with a clean, professional, glassmorphism-based UI.
 
-## Getting Started
+---
+
+## ✨ Features
+
+### 🧾 Transaction Management
+
+* Add product-based transactions
+* Store:
+
+  * Product name
+  * Product price
+  * Date (auto + manual selection)
+  * Person name
+  * Amount received
+  * Auto-calculated balance
+* Delete transactions instantly
+
+### 📊 Dashboard & Analytics
+
+* Total income overview
+* Total expense summary
+* Net balance calculation
+* Interactive charts (pie / bar)
+* Real-time updates on data change
+
+### 💾 Offline First
+
+* Works **100% offline**
+* Data stored securely in **local device storage**
+* No internet or cloud dependency
+
+### 🎨 UI / UX
+
+* Glassmorphism (translucent blur effects)
+* Dark gradient background
+* Smooth animations
+* User-friendly & professional design
+* Color-coded actions:
+
+  * 🟢 Add button
+  * 🔴 Delete button
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology          | Usage                       |
+| ------------------- | --------------------------- |
+| **Flutter**         | Cross-platform UI framework |
+| **Dart**            | Programming language        |
+| **Hive**            | Local NoSQL database        |
+| **Provider**        | State management            |
+| **fl_chart**        | Graphs & charts             |
+| **Material Design** | UI components               |
+
+---
+
+## 📂 Project Structure
+
+```
+lib/
+ ├── main.dart
+ ├── models/
+ │    └── transaction_model.dart
+ ├── providers/
+ │    └── transaction_provider.dart
+ ├── screens/
+ │    ├── home_screen.dart
+ │    ├── add_transaction_screen.dart
+ │    └── dashboard_screen.dart
+ ├── widgets/
+ │    └── glass_card.dart
+assets/
+ └── icon/
+     └── app_icon.png
+```
+
+---
+
+## 🧮 Business Logic
+
+* **Balance Calculation**
+
+  ```
+  Balance = Product Price − Amount Received
+  ```
+* Auto-updated when transactions are added or deleted
+* Persistent storage even after app restart
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Flutter SDK
-- Android Studio (for Android development)
-- Android Device enabled for USB Debugging
 
-### Running in Android Studio
-1.  **Open Project**: Launch Android Studio and click **Open**. Select the `Cal-Org` folder on your desktop.
-2.  **Sync**: Wait for Android Studio to sync Gradle files and index the project.
-3.  **Select Device**: In the top toolbar, you should see a device dropdown. Select your connected phone (e.g., `I2221`).
-4.  **Run**: Click the green **Play** button (▶) to build and install the app on your phone.
+* Flutter SDK (latest stable)
+* Android Studio / VS Code
+* Android Emulator or Physical Device
 
-### Running via Terminal
-You can also run the app directly from the terminal without opening Android Studio full GUI:
+---
+
+### Installation
+
 ```bash
+git clone https://github.com/your-username/Cal-Org.git
+cd Cal-Org
+flutter pub get
 flutter run
 ```
-If multiple devices are connected, specify the device:
-```bash
-flutter run -d 10BF4D0GAZ002B1
-```
 
-## Features
-- **Offline Storage**: Hive NoSQL
-- **UI**: Glassmorphism
-- **Analytics**: FL Chart
+---
+
+## 📱 Platform Support
+
+* ✅ Android (Fully supported)
+* ❌ iOS (Not configured – Android-focused project)
+
+---
+
+## 🔐 Permissions
+
+* No internet permission required
+* Uses app sandboxed storage
+* Storage permission not mandatory unless exporting files
+
+---
+
+## 🧪 Tested On
+
+* Android Emulator
+* Physical Android device
+* Android 12+
+
+---
+
+## 📌 Future Enhancements
+
+* PDF / Excel export
+* Monthly & yearly reports
+* Search & filter transactions
+* Backup & restore
+* Multi-business support
+* Authentication (optional)
+
+---
+
+## 👨‍💻 Author
+
+**Sujay V**
+Flutter Developer | AI & ML Enthusiast
+
+---
+
+## ⭐ Show Your Support
+
+If you like this project:
+
+* ⭐ Star the repo
+* 🍴 Fork it
+* 🐛 Report issues
+* 🚀 Suggest improvements
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+Just say **“Next GitHub polish”** 😎🚀
