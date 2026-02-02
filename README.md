@@ -172,5 +172,3 @@ If you like this project:
 This project is licensed under the **MIT License**.
 
 ---
-
-Just say **“Next GitHub polish”** 😎🚀
