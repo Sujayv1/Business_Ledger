@@ -1,0 +1,53 @@
+name: cal_org
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  provider: ^6.0.5
+  fl_chart: ^1.1.1
+  permission_handler: ^12.0.1
+  intl: ^0.20.2
+  google_fonts: ^6.1.0
+  device_info_plus: ^11.0.0
+  pdf: ^3.10.7
+  printing: ^5.11.1
+  path_provider: ^2.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.6
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/icon/img.jpg"
+  min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icon/img.jpg
+    - assets/fonts/NotoSans-Bold.ttf
+    - assets/fonts/NotoSans-Regular.ttf
+    - assets/fonts/NotoSans-BoldItalic.ttf
+    - assets/fonts/NotoSans-Italic.ttf
+
+
+
+#

@@ -1,0 +1,111 @@
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:intl/intl.dart';
+import '../models/transaction.dart';
+import '../models/transaction_item.dart';
+
+class PdfHelper {
+  static final NumberFormat indianR = NumberFormat.simpleCurrency(
+    locale: 'en_IN',
+    name: 'INR',
+    decimalDigits: 0,
+  );
+  static Future<void> generateBill(Transaction transaction) async {
+    final pdf = pw.Document();
+    final font = await PdfGoogleFonts.poppinsRegular();
+    final fontBold = await PdfGoogleFonts.poppinsBold();
+
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              // Header
+              pw.Center(
+                child: pw.Text("Vishwabandhu Organics", style: pw.TextStyle(font: fontBold, fontSize: 24)),
+              ),
+              pw.SizedBox(height: 20),
+
+              // Invoice Details
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: [
+                      pw.Text("Bill To:", style: pw.TextStyle(font: fontBold)),
+                      pw.Text(transaction.personName, style: pw.TextStyle(font: font)),
+                      if (transaction.personPhone.isNotEmpty)
+                        pw.Text("Phone: ${transaction.personPhone}", style: pw.TextStyle(font: font)),
+                    ],
+                  ),
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.end,
+                    children: [
+                      pw.Text("Date: ${DateFormat('dd-MM-yyyy').format(transaction.date)}", style: pw.TextStyle(font: font)),
+                      pw.Text("Invoice #: ${transaction.id.substring(transaction.id.length - 6)}", style: pw.TextStyle(font: font)),
+                      // Simple truncated ID for brevity
+                    ],
+                  ),
+                ],
+              ),
+              pw.SizedBox(height: 20),
+
+              // Items Table
+              pw.TableHelper.fromTextArray(
+                context: context,
+                border: const pw.TableBorder(
+                   bottom: pw.BorderSide(width: 0.5),
+                   horizontalInside: pw.BorderSide(width: 0.5),
+                ),
+                headerStyle: pw.TextStyle(font: fontBold),
+                cellStyle: pw.TextStyle(font: font),
+                data: <List<String>>[
+                  <String>['Item', 'Qty', 'Unit Price', 'Total'],
+                  ...transaction.items.map((item) => [
+                    item.productName,
+                    item.quantity.toString(),
+                    indianR.format(item.unitPrice),
+                    indianR.format(item.totalPrice),
+                  ]).toList(),
+                  // Legacy support for single item
+                  if (transaction.items.isEmpty && transaction.productName.isNotEmpty)
+                     [transaction.productName, "1", indianR.format(transaction.productPrice), indianR.format(transaction.productPrice)]
+                ],
+              ),
+              pw.SizedBox(height: 20),
+
+              // Summary
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.end,
+                children: [
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.end,
+                    children: [
+                      pw.Text("Total Amount: ${indianR.format(transaction.totalAmount)}", style: pw.TextStyle(font: fontBold)),
+                      pw.Text("Paid Amount: ${indianR.format(transaction.amountReceived)}", style: pw.TextStyle(font: font)),
+                      pw.Text("Balance Due: ${indianR.format(transaction.balance)}", style: pw.TextStyle(font: fontBold, color: PdfColors.red)),
+                    ],
+                  ),
+                ],
+              ),
+
+              pw.Spacer(),
+              pw.Center(child: pw.Text("Thank you for your business!", style: pw.TextStyle(font: font, fontSize: 10, color: PdfColors.grey))),
+            ],
+          );
+        },
+      ),
+    );
+
+    await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdf.save(),
+      name: 'Bill_${transaction.personName}_${DateFormat('yyyyMMdd').format(transaction.date)}',
+    );
+  }
+}
